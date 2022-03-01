@@ -71,6 +71,8 @@ clear_zp:
 		sta		pupbt2
 		sta		pupbt3
 
+
+		mva 	#$e0	$e0
 		;set up audio
 		; timer 1: 16-bit linked, audio enabled
 		; timer 2: 16-bit linked, audio disabled
@@ -195,14 +197,13 @@ prior_byte_2 = * - 1
 		stx		chactl			;4
 .endif
 		
-.if [(#%3)==2 && #!=191]
+.if [(#%3)==2]
 		ldy.w		zpsndbuf+#		;5, 6, 7
 		sty		audf1			;8, 9, 10, 11
 		sty		stimer			;12, 13, 14, 15
-		
-		bit.w	$0100
-		nop
-		nop
+.if (#!=191)	
+		:4 nop
+.endif
 .else
 		ldy		zpsndbuf+#		;5, 6, 7
 		sty		audf1			;8, 9, 10, 11
@@ -215,7 +216,7 @@ prior_byte_2 = * - 1
 		;sound, and the other 58 we toss. We read 10 bytes a scanline and so this
 		;takes 32 scanlines.
 				
-		ldx		#$e0
+		ldx		$e0 ; #$e0
 		
 		;we are coming in hot from the last visible scanline, so we need to skip
 		;the wsync
@@ -223,10 +224,11 @@ prior_byte_2 = * - 1
 		
 sndread_loop:
 		sta		wsync						;4
+		bit.w	$00
 sndread_loop_start:
-		bit		$00
 		ldy		ide_data					;4
-		mva		ide_data zpsndbuf+$20,x		;9
+		lda		ide_data
+		sta		zpsndbuf+$20,x		;9
 		lda		ide_data					;4
 		sty		audf1						;4
 		sty		stimer						;4
@@ -246,7 +248,7 @@ sndread_loop_start:
 		ldy	ide_data
 		mva	ide_data soundbuf+$40
 		lda	ide_data
-		bit	$00
+		bit.w	$00
 		sty	audf1
 		sty	stimer
 		:7 lda	ide_data		;28
@@ -258,7 +260,7 @@ eat_loop:
 	ldy		ide_data
 	mva		ide_data soundbuf+$40-<(-19),x
 	lda		ide_data
-	nop
+	bit	$00
 	sty		audf1
 	sty		stimer
 	:7 lda	ide_data		;28
@@ -270,7 +272,8 @@ eat_loop:
 	ldy		ide_data
 	lda		ide_data
 	pha:pla
-	bit		$00		
+	bit		$00
+	nop
 	sty		audf1
 	sty		stimer
 		
@@ -278,7 +281,7 @@ main_loop_start:
 ; cca 41
 ;:17		nop
 		lda		$d510 ;4
-		beq		@+ ;3
+		bne		@+ ;3
 		lda		#$01
 		sta		$d511
 		sta		wsync
@@ -294,7 +297,7 @@ main_loop_start:
 		ldy		soundbuf
 
 		bit		$0100
-		bit		$00
+		bit		$0100
 		nop
 		
 		lda		consol
@@ -312,7 +315,8 @@ wait_loop:
 wait_loop_offset = *-2
 
 		bit		$0100
-		bit		$0100
+		bit		$0
+		nop
 		
 		lda		consol
 		lsr
