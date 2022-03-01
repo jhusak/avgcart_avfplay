@@ -260,7 +260,7 @@ eat_loop:
 	ldy		ide_data
 	mva		ide_data soundbuf+$40-<(-19),x
 	lda		ide_data
-	bit	$00
+	nop
 	sty		audf1
 	sty		stimer
 	:7 lda	ide_data		;28
@@ -272,8 +272,7 @@ eat_loop:
 	ldy		ide_data
 	lda		ide_data
 	pha:pla
-	bit		$00
-	nop
+	bit		$00		
 	sty		audf1
 	sty		stimer
 		
@@ -281,7 +280,7 @@ main_loop_start:
 ; cca 41
 ;:17		nop
 		lda		$d510 ;4
-		bne		@+ ;3
+		beq		@+ ;3
 		lda		#$01
 		sta		$d511
 		sta		wsync
@@ -297,7 +296,7 @@ main_loop_start:
 		ldy		soundbuf
 
 		bit		$0100
-		bit		$0100
+		bit		$00
 		nop
 		
 		lda		consol
@@ -315,8 +314,7 @@ wait_loop:
 wait_loop_offset = *-2
 
 		bit		$0100
-		bit		$0
-		nop
+		bit		$0100
 		
 		lda		consol
 		lsr
