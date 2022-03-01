@@ -260,7 +260,7 @@ eat_loop:
 	ldy		ide_data
 	mva		ide_data soundbuf+$40-<(-19),x
 	lda		ide_data
-	nop
+	bit	$00
 	sty		audf1
 	sty		stimer
 	:7 lda	ide_data		;28
@@ -272,7 +272,8 @@ eat_loop:
 	ldy		ide_data
 	lda		ide_data
 	pha:pla
-	bit		$00		
+	bit		$00
+	nop
 	sty		audf1
 	sty		stimer
 		
