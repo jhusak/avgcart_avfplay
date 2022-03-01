@@ -297,7 +297,7 @@ main_loop_start:
 		ldy		soundbuf
 
 		bit		$0100
-		bit		$00
+		bit		$0100
 		nop
 		
 		lda		consol
