@@ -1,7 +1,7 @@
 .SUFFIXES: .s
 .SUFFIXES: .xex
 c:
-	mads movplay_nohum.asm -o:AVFPLAY
+	mads movplay_smoothsound.asm -o:AVFPLAY
 
 %.xex: %.s
 	mads -l $< -o:$@
