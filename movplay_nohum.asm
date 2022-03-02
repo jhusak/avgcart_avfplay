@@ -93,6 +93,7 @@ clear_zp:
 		bit		pal
 		bne		is_ntsc
 		
+		mva 	#{bit.b 0 } ntsc_eat_cycle
 		mva		#$40 prior_byte_1
 		mva		#$c7 prior_byte_2
 		mva		#<(-67) wait_loop_count
@@ -256,14 +257,16 @@ sndread_loop_start:
 
 		ldx		#<(-18)
 eat_loop:
-	sta		wsync
+	sta		wsync ; here one cycle too many in NTSC.
 	ldy		ide_data
 	mva		ide_data soundbuf+$40-<(-19),x
-	lda		ide_data
-	bit	$00
+	cpx		#$fb
+ntsc_eat_cycle = *
+	bne		*+2
+	nop
 	sty		audf1
 	sty		stimer
-	:7 lda	ide_data		;28
+	:8 lda	ide_data		;28
 	inx
 	bne		eat_loop
 		
@@ -315,11 +318,11 @@ wait_loop_offset = *-2
 		sta		wsync
 
 		cpx		#$e8	;2
-		bne		*+2 	;3/2
+		bne		*+2 	;3/2 ;skip dl dma
 		cpx		#$f0	;2
-		bne		*+2 	;3/2
+		bne		*+2 	;3/2 ;skip dl dma
 		cpx		#$f8	;2
-		bne		*+2 	;3/2
+		bne		*+2 	;3/2 ;skip dl dma
 		nop
 		bit.b 		0
 		
