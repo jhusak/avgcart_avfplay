@@ -6,6 +6,7 @@ This is crucial, because play audio method used is PWM, so even one-cycle 1.79MH
 
 You can drop this player on your SD card and replace the old one.
 
+If you want to make one compressed with exomizer, you should install it and type "make build".
 
 Added features:
 
