@@ -16,3 +16,5 @@ Then copy the binary to sd card.
 Added features:
 
 - OPTION - exits to cart menu
+
+The code used to work under Linux and OSX. However, some install options in Makefile do work only under OSX. Under linux copying to sd card has to be done manually.
