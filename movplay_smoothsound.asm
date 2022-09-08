@@ -330,8 +330,10 @@ wait_loop_offset = *-2
 		sty		stimer
 
 		lda		consol
-		lsr
-		
+		and		#4
+		bne		@+
+		jmp		main_loop_start+5
+@
 		inx
 		bne		wait_loop
 		jmp		main_loop

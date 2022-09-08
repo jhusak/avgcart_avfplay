@@ -6,10 +6,12 @@ This is crucial, because play audio method used is PWM, so even one-cycle 1.79MH
 
 You can drop this player on your SD card and replace the old one.
 
+The active production version is movplay_smoothsound.asm (as declared in Makefile)
+
+Type "make" to build AVFPLAY, then copy the binary to the root of the AVGCART sd card.
+
 If you want to make one compressed with exomizer, you should install it and type "make build".
 
 Added features:
 
 - OPTION - exits to cart menu
-
-- Desync-check and resync if desynced.
