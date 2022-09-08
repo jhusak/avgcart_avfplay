@@ -11,12 +11,13 @@ build: c
 	# exomizer sfx sys -Di_load_addr=0xc00 -Datari_init=1 ai.xex -t 168 -n -o aic.xex
 
 cp: build
-	while ! [ -d /Volumes/UNTITLED ] ; do sleep 1 ; done
+	while ! [ -d /Volumes/UNTITLED -o -d /Volumes/AVGCART ] ; do sleep 1 ; done
 	sleep 1
-	cp AVFPLAY /Volumes/UNTITLED/AVFPLAY
-	eject || true
+	[ -d /Volumes/UNTITLED ] &&  cp AVFPLAY /Volumes/UNTITLED/AVFPLAY && echo "Wait for the card to eject..." &&  diskutil eject /Volumes/UNTITLED || true
+	[ -d /Volumes/AVGCART ] &&  cp AVFPLAY /Volumes/AVGCART/AVFPLAY && echo "Wait for the card to eject..." &&  diskutil eject /Volumes/AVGCART || true
 cpb: 
-	while ! [ -d /Volumes/UNTITLED ] ; do sleep 1 ; done
+	while ! [ -d /Volumes/UNTITLED -o -d /Volumes/AVGCART ] ; do sleep 1 ; done
 	sleep 1
-	cp AVFPLAY /Volumes/UNTITLED/AVFPLAY
-	eject || true
+	[ -d /Volumes/UNTITLED ] &&  cp AVFPLAY /Volumes/UNTITLED/AVFPLAY && echo "Wait for the card to eject..." && diskutil eject /Volumes/UNTITLED || true
+	[ -d /Volumes/AVGCART ] &&  cp AVFPLAY /Volumes/AVGCART/AVFPLAY && echo "Wait for the card to eject..." &&  diskutil eject /Volumes/AVGCART || true
+
