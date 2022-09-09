@@ -5,7 +5,7 @@ Original from Avery Lee, modified foe AVGCART by (who?)
 
 Modified by me to be even better.
 
-This is related to playing fullscreen video 50/60FPS with almost 7 bit resolution of sound on plain, unbodified Atari 8-bit computers!
+This is related to playing fullscreen video 50/60FPS with almost 7 bit resolution of sound on plain, unmodified Atari 8-bit computers!
 
 
 Hello.
