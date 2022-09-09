@@ -1,3 +1,11 @@
+The AVF movie player for AVG CART that PLAYS SOUND WITHOUT HISSLE and HUM.
+Original from Avery Lee, modified foe AVGCART by (who?)
+
+Modified by me to be even better.
+
+This is related to playing fullscreen video 50/60FPS with almost 7 bit resolution of sound on plain, unbodified Atari 8-bit computers!
+
+
 Hello.
 
 I have managed to fix the original AVFPLAY player for AVGCART in a way that sound plays exactly in the same cycle of the line.
