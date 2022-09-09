@@ -93,7 +93,7 @@ clear_zp:
 		bit		pal
 		bne		is_ntsc
 		
-		mva 	#{bit.b 0 } ntsc_eat_cycle
+		mva 		#{bit.b 0 } ntsc_eat_cycle
 		mva		#$40 prior_byte_1
 		mva		#$c7 prior_byte_2
 		mva		#<(-67) wait_loop_count
@@ -129,7 +129,7 @@ is_pal:
 		jsr		FlipToVideoDisplay
 		
 		;set up for reading
-		lda	#248/2
+		lda		#248/2
 		cmp:req	vcount
 		cmp:rne	vcount
 		
@@ -145,9 +145,9 @@ is_pal:
 main_loop_delay:
 		mva		#0 dmactl
 		
-		lda	#124
+		lda		#124
 		cmp:rne	vcount
-		mwa	#dlist dlistl
+		mwa		#dlist dlistl
 		
 		mva		#$22 dmactl
 err:
@@ -160,7 +160,7 @@ main_loop:
 		
 		;DLI should be on by now; if not, wait for it.
 		lda:rpl	nmist
-		sta	nmires
+		sta		nmires
 		
 :7		nop
 
@@ -225,7 +225,7 @@ prior_byte_2 = * - 1
 		
 sndread_loop:
 		sta		wsync						;4
-		bit.w	$00
+		bit.w		$00
 sndread_loop_start:
 		ldy		ide_data					;4
 		lda		ide_data
@@ -245,40 +245,40 @@ sndread_loop_start:
 		inx									;2
 		bne		sndread_loop				;3
 		
-		sta	wsync
-		ldy	ide_data
-		mva	ide_data soundbuf+$40
-		lda	ide_data
-		bit.w	$00
-		sty	audf1
-		sty	stimer
+		sta		wsync
+		ldy		ide_data
+		mva		ide_data soundbuf+$40
+		lda		ide_data
+		bit.w		$00
+		sty		audf1
+		sty		stimer
 		:7 lda	ide_data		;28
-		mwa	#dlist dlistl
+		mwa		#dlist dlistl
 
 		ldx		#<(-18)
 eat_loop:
-	sta		wsync ; here one cycle too many in NTSC.
-	ldy		ide_data
-	mva		ide_data soundbuf+$40-<(-19),x
-	cpx		#$fb
+		sta		wsync ; here one cycle too many in NTSC.
+		ldy		ide_data
+		mva		ide_data soundbuf+$40-<(-19),x
+		cpx		#$fb
 ntsc_eat_cycle = *
-	bne		*+2
-	nop
-	sty		audf1
-	sty		stimer
-	:8 lda	ide_data		;28
-	inx
-	bne		eat_loop
+		bne		*+2
+		nop
+		sty		audf1
+		sty		stimer
+		:8 lda	ide_data		;28
+		inx
+		bne		eat_loop
 		
-	;Do a line of audio, so we get some time again.
-	sta		wsync
-	ldy		ide_data
-	lda		ide_data
-	pha:pla
-	bit		$00
-	nop
-	sty		audf1
-	sty		stimer
+		;Do a line of audio, so we get some time again.
+		sta		wsync
+		ldy		ide_data
+		lda		ide_data
+		pha:pla
+		bit		$00
+		nop
+		sty		audf1
+		sty		stimer
 		
 main_loop_start:				
 ; cca 41
@@ -440,15 +440,15 @@ dlist_init:
 ;============================================================================
 		org		$4f00
 dlist_text:
-		dta	$70
-		dta	$70
-		dta	$70
-		dta	$42,a(framebuf)
+		dta		$70
+		dta		$70
+		dta		$70
+		dta		$42,a(framebuf)
 		:23 dta	$02
-		dta	$41,a(dlist_text)
+		dta		$41,a(dlist_text)
 		
 		org		$5000
 framebuf:
 		run	main
 	end
-	
+
