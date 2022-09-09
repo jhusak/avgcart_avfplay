@@ -27,6 +27,10 @@ Added features:
 
 The code used to work under Linux and OSX. However, some install options in Makefile do work only under OSX. Under linux copying to sd card has to be done manually.
 
+Installing:
+
+To install copy AVFPLAY to the root of AVGCART SD CARD.
+
 Links:
 https://avgcart.tmp.sk
 https://atari8bit.net/tutorials/de-re-avgcart/
