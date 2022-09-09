@@ -10,9 +10,9 @@ This is related to playing fullscreen video 50/60FPS with almost 7 bit resolutio
 
 Hello.
 
-I have managed to fix the original AVFPLAY player for AVGCART in a way that sound plays exactly in the same cycle of the line.
+I have managed to fix the original AVFPLAY player for AVGCART in a way that every sound sample plays exactly in the same cycle of the line.
 
-This is crucial, because play audio method used is PWM, so even one-cycle 1.79MHz shift is audible (for purists).
+This is crucial, because play audio method used is PWM, so even one-cycle 1.79MHz shift is audible as hiss or whistle.
 
 You can drop this player on your SD card and replace the old one.
 
