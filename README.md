@@ -34,6 +34,8 @@ Installing:
 To install copy AVFPLAY to the root of AVGCART SD CARD.
 
 Links:
+
 https://avgcart.tmp.sk
+
 https://atari8bit.net/tutorials/de-re-avgcart/
 
