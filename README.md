@@ -18,20 +18,24 @@ You can drop this player on your SD card and replace the old one.
 
 The active production version is movplay_smoothsound.asm (as declared in Makefile)
 
-Type "make" to build AVFPLAY, then copy the binary to the root of the AVGCART's sd card.
+Type "make" to build AVFPLAY various versions, then copy the needed binary to the root of the AVGCART's sd card.
 
 If you want to make one compressed with exomizer (that runs on Atari on 6502 CPU), type "make build".
 Then copy the binary to sd card.
 
 Added features:
 
-- OPTION - exits to cart menu
+- ESC - exit to CART menu
+- option - volume up
+- select - volume down
+- start pause on/off
+- removed annoying beep at the start
 
 The code used to work under Linux and OSX. However, some install options in Makefile do work only under OSX. Under linux copying to sd card has to be done manually.
 
 Installing:
 
-To install copy AVFPLAY to the root of AVGCART SD CARD.
+To install copy AVFPLAY from proper bin/subdir to the root of AVGCART SD CARD.
 
 Links:
 
