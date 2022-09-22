@@ -1,7 +1,14 @@
 .SUFFIXES: .s
 .SUFFIXES: .xex
 c:
-	mads movplay_smoothsound.asm -o:AVFPLAY
+	dir=bin/pokey ;\
+	mkdir -p $$dir;\
+	mads movplay_smoothsound.asm -d:COVOX=0 -o:$$dir/AVFPLAY
+	for covox in D280 D500 D600 D700 ; do \
+	dir=bin/covox_$$covox;\
+	mkdir -p $$dir;\
+	mads movplay_smoothsound.asm -d:COVOX=0x$$covox -o:$$dir/AVFPLAY ;\
+	done
 
 %.xex: %.s
 	mads -l $< -o:$@
