@@ -56,6 +56,16 @@ zp_end:
 
 .proc	main
 		jsr reset_sound
+		.if (COVOX=$D300)
+		lda	$D302
+		and	#$fb
+		sta	$D302
+		lda 	#$ff
+		sta	$D300
+		lda	$D302
+		ora	#$4
+		sta	$D302
+		.endif
 		sei
 
 		;clear PIA interrupts
@@ -65,12 +75,12 @@ zp_end:
 
 		;zero working variables
 
-		ldx		#zp_end-zp_start
+		ldx		#0
 		lda		#0
 clear_zp:
 		sta		zp_start,x
 		dex
-		bpl		clear_zp
+		bne		clear_zp
 
 		;nuke startup bytes to force cold reset
 		sta		pupbt1
@@ -314,6 +324,16 @@ main_loop_start:
 		lda		$d510 ;4
 		beq		@+ ;3
 exit
+		.if (COVOX=$D300)
+		lda	$D302
+		and	#$fb
+		sta	$D302
+		lda 	#$00
+		sta	$D300
+		lda	$D302
+		ora	#$4
+		sta	$D302
+		.endif
 		lda		#$01
 		sta		$d511
 		sta		wsync
