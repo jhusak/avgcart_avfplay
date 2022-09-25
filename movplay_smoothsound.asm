@@ -1,3 +1,20 @@
+; AVF MOVPLAY by Avery Lee 2013
+; adopted to AVGCart by tmp(?)
+; Sound quality fixes by Jakub Husak 2022
+;
+; Player runs from the AVGCART's root directory of avgcart
+; as helper (you simply click *.avf file)
+;
+; To prepare SD card to play movies simply write them
+; (avf files)
+; to the freshly formatted SD card as well as this player
+; (the AVFPLAY binary must be in the root catalog)
+; and enjoy 50/60 fps movie :)
+;
+; logic:
+; start - toggle pause
+; select (playing) - volume down (POKEY only)
+; option (playing) - volume up (POKEY only)
 ;
 ; 4C00-4EFF		Playback display list
 ; 4F00-4FFF		Error display list
@@ -55,8 +72,12 @@ zp_end:
 		opt		o+
 
 .proc	main
+		lda		#0
+		sta		nmien
 		jsr reset_sound
 		.if (COVOX=$D300)
+		lda	#$ff
+		sta	$d300
 		lda	$D302
 		and	#$fb
 		sta	$D302
@@ -65,6 +86,10 @@ zp_end:
 		lda	$D302
 		ora	#$4
 		sta	$D302
+		.endif
+		.if (COVOX!=0)
+		lda 	#$ff
+		sta	COVOX
 		.endif
 		sei
 
@@ -82,13 +107,51 @@ clear_zp:
 		dex
 		bne		clear_zp
 
+		ldx		#$bf
+		ldy		#$33
+clear_zp1:
+		tya
+		sta		zpsndbuf,x
+		dex
+		beq cend
+		cpy #$ff
+		beq clear_zp1
+		iny
+		iny
+		
+		bne		clear_zp1
+cend
+		sty		zpsndbuf
+
+		lda		#$ff
+		ldx 		#0
+fillsndbuff
+		sta		soundbuf,x
+		dex
+		bne		fillsndbuff
+;
+;		lda 		#$33
+;		ldx		#$66
+;clear_zp2
+;		sta		zp_start,x
+;		inx
+;		cpx		#$c0
+;		bne		clear_zp2
+
+;		lda		#0
+;clear_zp3
+;		sta		zp_start,x
+;		inx
+;		bne clear_zp3
+
 		;nuke startup bytes to force cold reset
 		sta		pupbt1
 		sta		pupbt2
 		sta		pupbt3
 
 
-		mva 	#$e0	$e0
+		; store to force 3 cycle command in main loop
+		mva		#$e0	$e0
 		;set up audio
 		; timer 1: 16-bit linked, audio enabled
 		; timer 2: 16-bit linked, audio disabled
@@ -102,7 +165,7 @@ clear_zp:
 		mva		#$03 skctl
 
 		;initialize text display
-		jsr		FlipToTextDisplay
+		;jsr		FlipToTextDisplay
 		
 		;set up NTSC/PAL differences
 		lda		#$08
@@ -125,11 +188,12 @@ is_ntsc:
 
 is_pal:
 
+		mva		#$00 colbk
 		ldx		#$01
 		stx		$d510
 		; needed because sometimes background is not black.
-		mva		#$00 colbk
 		
+		; eat 8 kb of empty header
 		dex
 		ldy		#$20
 @
@@ -138,9 +202,9 @@ is_pal:
 		bne		@-
 		dey
 		bne		@-
-		
-		mva		#$00 colbk
 
+
+		
 ;		mva	#0 irqen
 ;		mva	#$40 irqen
 ;		bit:rvs	irqst
@@ -254,7 +318,7 @@ prior_byte_2 = * - 1
 		;sound, and the other 58 we toss. We read 10 bytes a scanline and so this
 		;takes 32 scanlines.
 				
-		ldx		$e0 ; #$e0
+		ldx		$e0 ; #$e0 , needed one cycle more 
 		
 		;we are coming in hot from the last visible scanline, so we need to skip
 		;the wsync
@@ -264,19 +328,21 @@ sndread_loop:
 		sta		wsync						;4
 		bit.w		$00
 sndread_loop_start:
+		
 		ldy		ide_data					;4
 		lda		ide_data
-		sta		zpsndbuf+$20,x		;9
+		sta		zpsndbuf+$20,x		;8
 		lda		ide_data					;4
 		PLAY_SAMPLE				;8,9,10,11,12,13,14,15
 		sta		zpsndbuf+$40,x				;4
-		mva		ide_data zpsndbuf+$60,x		;9
-		mva		ide_data zpsndbuf+$80,x		;9
-		mva		ide_data zpsndbuf+$a0,x		;9
-		mva		ide_data zpsndbuf+$c0,x		;9
+		mva		ide_data zpsndbuf+$60,x		;8
+		mva		ide_data zpsndbuf+$80,x		;8
+		mva		ide_data zpsndbuf+$a0,x		;8
+		mva		ide_data zpsndbuf+$c0,x		;8
 		mva		ide_data soundbuf-$e0,x		;9
 		mva		ide_data soundbuf-$c0,x		;9
 		lda		ide_data					;4
+		:5 nop
 
 		inx									;2
 		bne		sndread_loop				;3
@@ -322,9 +388,20 @@ main_loop_start:
 ; cca 41
 ;:17		nop
 		lda		$d510 ;4
-		beq		@+ ;3
+		beq		no_exit ;3
 exit
 		.if (COVOX=$D300)
+		ldx	$d300
+		cpx	#$ff
+		beq	exit_cont
+		sta	wsync
+		sta	wsync
+		sta	wsync
+		sta	wsync
+		inc	$d300
+		bne	exit
+exit_cont
+		lda	#$ff
 		lda	$D302
 		and	#$fb
 		sta	$D302
@@ -341,7 +418,7 @@ exit
 		lda		#$00
 		sta		$d511
 		jmp		$e477
-@
+no_exit
 		
 		;We have 47 scanlines to wait (~4ms), so in the meantime let's play
 		;some audio.

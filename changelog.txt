@@ -1,10 +1,14 @@
-Date:   Sat Sep 24 00:22:16 2022 +0200
+Date:   Sep 25 12:35:40 2022
+
+    fixed click at start. Now plays without click.
+
+Date:   Sep 24 00:22:16 2022
 
     added simcovox under D300; fixed not initialized sound buffer
     removed annoying glitch at the beginning when covox in use
 
 --
-Date:   Thu Sep 22 02:00:24 2022 +0200
+Date:   Sep 22 02:00:24 2022
 
     added: volumeup/down;
     added pause;
@@ -12,82 +16,82 @@ Date:   Thu Sep 22 02:00:24 2022 +0200
     removed annoying beep at the beginning;
 
 --
-Date:   Fri Sep 9 18:25:25 2022 +0200
+Date:   Sep 9 18:25:25 2022
 
     added binary
 
 --
-Date:   Thu Sep 8 09:29:58 2022 +0200
+Date:   Sep 8 09:29:58 2022
 
     polished-up Makefile
 
 --
-Date:   Thu Sep 8 09:16:07 2022 +0200
+Date:   Sep 8 09:16:07 2022
 
     added: option exits
 
 --
-Date:   Wed Mar 2 22:16:07 2022 +0100
+Date:   Mar 2 22:16:07 2022
 
     fixed all sound alignment PAL/NTSC
 
 --
-Date:   Wed Mar 2 15:48:55 2022 +0100
+Date:   Mar 2 15:48:55 2022
 
     changed file format to unix
 
 --
-Date:   Wed Mar 2 15:44:19 2022 +0100
+Date:   Mar 2 15:44:19 2022
 
     fixed all sound alignment in pal
 
 --
-Date:   Wed Mar 2 15:44:19 2022 +0100
+Date:   Mar 2 15:44:19 2022
 
     fixed all sound alignment
 
 --
-Date:   Tue Mar 1 19:59:13 2022 +0100
+Date:   Mar 1 19:59:13 2022
 
     partially aligned (more)
 
 --
-Date:   Tue Mar 1 19:54:34 2022 +0100
+Date:   Mar 1 19:54:34 2022
 
     reverted; working; partially aligned
 
 --
-Date:   Tue Mar 1 19:43:30 2022 +0100
+Date:   Mar 1 19:43:30 2022
 
     changed file format;
     fixed all times till last loop
 
 --
-Date:   Tue Mar 1 18:54:43 2022 +0100
+Date:   Mar 1 18:54:43 2022
 
     added makefile
 
 --
-Date:   Tue Mar 1 18:46:24 2022 +0100
+Date:   Mar 1 18:46:24 2022
 
     fixed some hum during display
 
 --
-Date:   Sat Feb 5 19:48:25 2022 +0100
+Date:   Feb 5 19:48:25 2022
 
     added original
 
 --
-Date:   Sat Feb 5 19:36:30 2022 +0100
+Date:   Feb 5 19:36:30 2022
 
     added file
 
 --
-Date:   Sat Feb 5 19:33:50 2022 +0100
+Date:   Feb 5 19:33:50 2022
 
     added missing includes
 
 --
-Date:   Sat Feb 5 19:31:21 2022 +0100
+Date:   Feb 5 19:31:21 2022
 
     initial commit
