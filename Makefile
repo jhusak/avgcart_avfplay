@@ -3,15 +3,15 @@
 c:
 	dir=bin/pokey ;\
 	mkdir -p $$dir;\
-	mads movplay_smoothsound.asm -d:COVOX=0 -o:$$dir/AVFPLAY
+	mads movplay_smoothsound.asm -bc -d:COVOX=0 -o:$$dir/AVFPLAY
 	for covox in D280 D300 D500 D600 D700 ; do \
 	dir=bin/covox_$$covox;\
 	mkdir -p $$dir;\
-	mads movplay_smoothsound.asm -d:COVOX=0x$$covox -o:$$dir/AVFPLAY ;\
+	mads movplay_smoothsound.asm -bc -d:COVOX=0x$$covox -o:$$dir/AVFPLAY ;\
 	done
 
 %.xex: %.s
-	mads -l $< -o:$@
+	mads -l $< -bc -o:$@
 
 build: c
 	exomizer sfx 0x2800 -C -n -t 168 AVFPLAY -o AVFPLAY
