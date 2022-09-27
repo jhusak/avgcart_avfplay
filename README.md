@@ -1,7 +1,7 @@
 **The AVF movie player for AVG CART that PLAYS SOUND WITHOUT HISSLE or HUM.**
 --
 
-Original from Avery Lee, modified foe AVGCART by (who?)
+Original from Avery Lee, modified for AVGCART by (who? tmp?)
 
 Modified by me to be even better.
 
