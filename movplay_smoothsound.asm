@@ -537,6 +537,8 @@ again
 		bpl again
 		rts
 
+;		avoid cross-page bne below
+		dta 0
 ;============================================================================
 .proc FlipToVideoDisplay
 
